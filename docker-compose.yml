@@ -1,0 +1,13 @@
+services:
+  rpg_db:
+    container_name: rpg_db
+    image: postgres:16-alpine
+    env_file:
+      - .env
+    ports:
+      - 5400:5432
+    volumes:
+      - rpg_db:/var/lib/postgresql/data
+
+volumes:
+  rpg_db: {}
