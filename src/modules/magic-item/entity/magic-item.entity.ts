@@ -16,6 +16,9 @@ export class MagicItem {
   @ApiProperty()
   defense: number;
 
+  @ApiProperty({ nullable: true })
+  character_id?: string;
+
   @ApiProperty({ enum: MagicItemType, example: MagicItemType.WEAPON })
   type: MagicItemType;
 
@@ -31,6 +34,7 @@ export class MagicItem {
     this.strength = entity.strength;
     this.defense = entity.defense;
     this.type = entity.type;
+    this.character_id = entity.character_id;
     this.created_at = entity.created_at ?? new Date();
     this.updated_at = entity.updated_at ?? new Date();
   }
