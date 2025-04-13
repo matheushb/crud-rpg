@@ -26,13 +26,55 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Installation
+## 1. Installation Steps
+
+### 1.1 Clone the Repository
+
+Clone the API repository using the command below:
 
 ```bash
-$ npm install
+git clone https://github.com/matheushb/crud-rpg.git
 ```
 
-## Running the app
+Then, enter the project directory:
+
+```bash
+cd crud-rpg
+```
+
+### 1.2 Install Dependencies
+
+```bash
+npm install
+```
+
+### 1.3 Configure Environment Variables
+
+Copy the .env.example file to a new file called .env:
+
+```bash
+cp .env.example .env
+```
+
+### 1.4 Initialize Docker
+
+Make sure Docker is running, then run the command
+
+```bash
+docker-compose up -d
+```
+
+### 1.5 Migrate database
+
+To apply migrations on database, execute the command:
+
+```bash
+npx prisma migrate dev
+```
+
+## 2. Starting the API
+
+To run the API execute:
 
 ```bash
 # development
@@ -45,29 +87,8 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
+## 3. Swagger documentation
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+GET /api
 ```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
