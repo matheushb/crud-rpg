@@ -3,6 +3,19 @@ import { MagicItemRepository } from './magic-item.repository';
 import { MagicItemPrismaMapper } from '../mapper/magic-item.prisma.mapper';
 import { MagicItem } from '../entity/magic-item.entity';
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
+import { FindAllMagicItemsParams } from '../dtos/find-all-magic-item.dto';
+
+const MAGIC_ITEM_SELECT: Prisma.MagicItemSelect = {
+  id: true,
+  name: true,
+  strength: true,
+  defense: true,
+  type: true,
+  created_at: true,
+  updated_at: true,
+  character_id: true,
+};
 
 @Injectable()
 export class MagicItemPrismaRepository implements MagicItemRepository {
@@ -14,13 +27,19 @@ export class MagicItemPrismaRepository implements MagicItemRepository {
   async create(magicItem: MagicItem) {
     const createdMagicItem = await this.prismaService.magicItem.create({
       data: this.magicItemMapper.mapFromEntity(magicItem),
+      select: MAGIC_ITEM_SELECT,
     });
 
     return this.magicItemMapper.mapToEntity(createdMagicItem);
   }
 
-  async findAll() {
-    const magicItems = await this.prismaService.magicItem.findMany();
+  async findAll(params: FindAllMagicItemsParams) {
+    const whereClause = this.getWhereClause(params);
+
+    const magicItems = await this.prismaService.magicItem.findMany({
+      where: whereClause,
+      select: MAGIC_ITEM_SELECT,
+    });
 
     return magicItems.map(this.magicItemMapper.mapToEntity);
   }
@@ -28,6 +47,7 @@ export class MagicItemPrismaRepository implements MagicItemRepository {
   async findOne(id: string) {
     const magicItem = await this.prismaService.magicItem.findUnique({
       where: { id },
+      select: MAGIC_ITEM_SELECT,
     });
 
     if (!magicItem) return null;
@@ -39,6 +59,7 @@ export class MagicItemPrismaRepository implements MagicItemRepository {
     const updatedMagicItem = await this.prismaService.magicItem.update({
       where: { id: magicItem.id },
       data: this.magicItemMapper.mapFromEntity(magicItem),
+      select: MAGIC_ITEM_SELECT,
     });
 
     return this.magicItemMapper.mapToEntity(updatedMagicItem);
@@ -47,10 +68,20 @@ export class MagicItemPrismaRepository implements MagicItemRepository {
   async delete(id: string) {
     const magicItem = await this.prismaService.magicItem.delete({
       where: { id },
+      select: MAGIC_ITEM_SELECT,
     });
 
     if (!magicItem) return null;
 
     return this.magicItemMapper.mapToEntity(magicItem);
+  }
+
+  private getWhereClause(
+    params: FindAllMagicItemsParams,
+  ): Prisma.MagicItemWhereInput {
+    return {
+      ...(params.character_id && { character_id: params.character_id }),
+      ...(params.type && { type: params.type }),
+    };
   }
 }
