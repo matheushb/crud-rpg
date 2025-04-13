@@ -1,5 +1,6 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCharacterDto } from './dtos/create-character.dto';
+import { FindAllCharacterParams } from './dtos/find-all-character.dto';
 import { UpdateCharacterDto } from './dtos/update-character.dto';
 import { Character } from './entity/character.entity';
 import {
@@ -20,8 +21,8 @@ export class CharacterService {
     return await this.characterRepository.create(character);
   }
 
-  async findAll() {
-    return this.characterRepository.findAll();
+  async findAll(params: FindAllCharacterParams) {
+    return await this.characterRepository.findAll(params);
   }
 
   async findOne(id: string) {
@@ -40,7 +41,7 @@ export class CharacterService {
     const characterUpdateProps = new Character({
       id: id,
       name: body.name ?? character.name,
-      class: body.class ?? character.class,
+      class: character.class,
       defense: body.defense ?? character.defense,
       level: body.level ?? character.level,
       nickname: body.nickname ?? character.nickname,

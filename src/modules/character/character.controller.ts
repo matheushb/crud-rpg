@@ -6,10 +6,12 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { CreateCharacterDto } from './dtos/create-character.dto';
 import { UpdateCharacterDto } from './dtos/update-character.dto';
 import { CharacterService } from './character.service';
+import { FindAllCharacterParams } from './dtos/find-all-character.dto';
 
 @Controller('character')
 export class CharacterController {
@@ -21,8 +23,8 @@ export class CharacterController {
   }
 
   @Get()
-  findAll() {
-    return this.characterService.findAll();
+  findAll(@Query() params: FindAllCharacterParams) {
+    return this.characterService.findAll(params);
   }
 
   @Get(':id')
