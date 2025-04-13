@@ -1,11 +1,12 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateMagicItemDto } from './dtos/create-magic-item.dto';
+import { FindAllMagicItemsParams } from './dtos/find-all-magic-item.dto';
+import { UpdateMagicItemDto } from './dtos/update-magic-item.dto';
+import { MagicItem } from './entity/magic-item.entity';
 import {
   MAGIC_ITEM_REPOSITORY,
   MagicItemRepository,
 } from './repositories/magic-item.repository';
-import { UpdateMagicItemDto } from './dtos/update-magic-item.dto';
-import { MagicItem } from './entity/magic-item.entity';
 
 @Injectable()
 export class MagicItemService {
@@ -20,8 +21,8 @@ export class MagicItemService {
     return await this.magicItemRepository.create(magicItem);
   }
 
-  async findAll() {
-    return this.magicItemRepository.findAll();
+  async findAll(params: FindAllMagicItemsParams) {
+    return this.magicItemRepository.findAll(params);
   }
 
   async findOne(id: string) {
@@ -42,7 +43,7 @@ export class MagicItemService {
       name: body.name ?? magicItem.name,
       defense: body.defense ?? magicItem.defense,
       strength: body.strength ?? magicItem.strength,
-      type: body.type ?? magicItem.type,
+      type: magicItem.type,
       character_id: body.character_id ?? magicItem.character_id,
       created_at: magicItem.created_at,
       updated_at: new Date(),
