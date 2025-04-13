@@ -100,6 +100,7 @@ GET /api
 ```bash
 POST /character
 ```
+
 ### 2. Cadastrar Item Mágico
 
 ```bash
@@ -121,7 +122,7 @@ GET /character/:id
 ### 5. Atualizar Nome Aventureiro por Identificador
 
 ```bash
-PATCH /character { "nickname" : "John Doe" }
+PATCH /character/:id { "nickname" : "John Doe" }
 ```
 
 ### 6. Remover Personagem
@@ -145,7 +146,7 @@ GET /magic-item/:id
 ### 9. Adicionar Item Mágico ao Personagem
 
 ```bash
-PATCH /magic-item { "character_id" : "id" }
+PATCH /magic-item/:id { "character_id" : "id" }
 ```
 
 ### 10. Listar Itens Mágicos por Personagem
@@ -157,7 +158,7 @@ GET /magic-item?character_id=:id
 ### 11. Remover Item Mágico do Personagem
 
 ```bash
-PATCH /magic-item { "character_id" : null }
+PATCH /magic-item/:id { "character_id" : null }
 ```
 
 ### 12. Buscar Amuleto do Personagem
@@ -165,7 +166,3 @@ PATCH /magic-item { "character_id" : null }
 ```bash
 GET /magic-item?character_id=:id&type=AMULET
 ```
-
-
-
-
