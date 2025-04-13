@@ -60,7 +60,10 @@ export class MagicItemService {
       defense: body.defense ?? magicItem.defense,
       strength: body.strength ?? magicItem.strength,
       type: magicItem.type,
-      character_id: body.character_id ?? magicItem.character_id,
+      character_id:
+        body.character_id === undefined
+          ? magicItem.character_id
+          : body.character_id,
       created_at: magicItem.created_at,
       updated_at: new Date(),
     });
