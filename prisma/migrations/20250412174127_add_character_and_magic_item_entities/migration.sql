@@ -33,5 +33,8 @@ CREATE TABLE "MagicItem" (
     CONSTRAINT "MagicItem_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateIndex
+CREATE UNIQUE INDEX "Character_nickname_key" ON "Character"("nickname");
+
 -- AddForeignKey
 ALTER TABLE "MagicItem" ADD CONSTRAINT "MagicItem_character_id_fkey" FOREIGN KEY ("character_id") REFERENCES "Character"("id") ON DELETE SET NULL ON UPDATE CASCADE;

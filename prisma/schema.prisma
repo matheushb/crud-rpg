@@ -16,7 +16,7 @@ datasource db {
 model Character {
   id       String @id @default(uuid())
   name     String
-  nickname String
+  nickname String @unique
   class    Class
   level    Int    @default(1)
   strength Int
