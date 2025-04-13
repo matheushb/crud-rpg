@@ -6,8 +6,10 @@ import { MagicItemPrismaRepository } from './repositories/magic-item.prisma.repo
 import { PrismaService } from '@/infra/prisma/prisma.service';
 import { MAGIC_ITEM_MAPPER } from './mapper/magic-item.mapper';
 import { MAGIC_ITEM_REPOSITORY } from './repositories/magic-item.repository';
+import { CharacterModule } from '../character/character.module';
 
 @Module({
+  imports: [CharacterModule],
   providers: [
     {
       provide: MAGIC_ITEM_MAPPER,

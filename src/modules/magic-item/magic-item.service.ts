@@ -1,4 +1,9 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateMagicItemDto } from './dtos/create-magic-item.dto';
 import { FindAllMagicItemsParams } from './dtos/find-all-magic-item.dto';
 import { UpdateMagicItemDto } from './dtos/update-magic-item.dto';
@@ -7,15 +12,22 @@ import {
   MAGIC_ITEM_REPOSITORY,
   MagicItemRepository,
 } from './repositories/magic-item.repository';
+import { CharacterService } from '../character/character.service';
+import { MagicItemType } from './enums/magic-item-type.enum';
 
 @Injectable()
 export class MagicItemService {
   constructor(
     @Inject(MAGIC_ITEM_REPOSITORY)
     private readonly magicItemRepository: MagicItemRepository,
+    private readonly characterService: CharacterService,
   ) {}
 
   async create(body: CreateMagicItemDto) {
+    if (body.type === MagicItemType.AMULET && body.character_id) {
+      await this.characterHasAmulet(body.character_id);
+    }
+
     const magicItem = new MagicItem(body);
 
     return await this.magicItemRepository.create(magicItem);
@@ -37,6 +49,10 @@ export class MagicItemService {
 
   async update(id: string, body: UpdateMagicItemDto) {
     const magicItem = await this.magicItemRepository.findOne(id);
+
+    if (magicItem.type === MagicItemType.AMULET && body.character_id) {
+      await this.characterHasAmulet(body.character_id);
+    }
 
     const magicItemUpdateProps = new MagicItem({
       id: id,
@@ -60,5 +76,15 @@ export class MagicItemService {
     }
 
     return magicItem;
+  }
+
+  private async characterHasAmulet(characterId: string): Promise<void> {
+    const character = await this.characterService.findOne(characterId);
+
+    const hasAmulet = character.hasAmulet();
+
+    if (hasAmulet) {
+      throw new BadRequestException('Character already has an amulet');
+    }
   }
 }

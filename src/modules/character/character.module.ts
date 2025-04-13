@@ -28,5 +28,6 @@ import { CHARACTER_MAPPER } from './mapper/character.mapper';
     CharacterService,
   ],
   controllers: [CharacterController],
+  exports: [CharacterService],
 })
 export class CharacterModule {}
