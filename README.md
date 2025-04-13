@@ -92,3 +92,80 @@ $ npm run start:prod
 ```bash
 GET /api
 ```
+
+## 4. Features
+
+### 1. Cadastrar Personagem
+
+```bash
+POST /character
+```
+### 2. Cadastrar Item Mágico
+
+```bash
+POST /magic-item
+```
+
+### 3. Listar Personagem
+
+```bash
+GET /character
+```
+
+### 4. Buscar Personagem por Identificador
+
+```bash
+GET /character/:id
+```
+
+### 5. Atualizar Nome Aventureiro por Identificador
+
+```bash
+PATCH /character { "nickname" : "John Doe" }
+```
+
+### 6. Remover Personagem
+
+```bash
+DELETE /character/:id
+```
+
+### 7. Listar Itens Mágicos
+
+```bash
+GET /magic-item
+```
+
+### 8. Buscar Item Mágico por Identificador
+
+```bash
+GET /magic-item/:id
+```
+
+### 9. Adicionar Item Mágico ao Personagem
+
+```bash
+PATCH /magic-item { "character_id" : "id" }
+```
+
+### 10. Listar Itens Mágicos por Personagem
+
+```bash
+GET /magic-item?character_id=:id
+```
+
+### 11. Remover Item Mágico do Personagem
+
+```bash
+PATCH /magic-item { "character_id" : null }
+```
+
+### 12. Buscar Amuleto do Personagem
+
+```bash
+GET /magic-item?character_id=:id&type=AMULET
+```
+
+
+
+
