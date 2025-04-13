@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import swaggerConfig from './config/swagger.config';
 import appConfig from './config/app-config';
+import { EnvironmentService } from './common/environment/environment.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -9,6 +10,8 @@ async function bootstrap() {
   swaggerConfig(app);
   appConfig(app);
 
-  await app.listen(3000);
+  const configService = app.get(EnvironmentService);
+
+  await app.listen(configService.getPort());
 }
 bootstrap();
