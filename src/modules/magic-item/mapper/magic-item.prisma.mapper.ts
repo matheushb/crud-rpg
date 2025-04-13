@@ -10,6 +10,7 @@ export class MagicItemPrismaMapper implements MagicItemMapper<PrismaMagicItem> {
       type: prismaItem.type,
       defense: prismaItem.defense,
       strength: prismaItem.strength,
+      character_id: prismaItem.character_id,
       created_at: prismaItem.created_at,
       updated_at: prismaItem.updated_at,
     });
